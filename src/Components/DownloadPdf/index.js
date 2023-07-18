@@ -79,7 +79,7 @@ const DownloadPdf = ({ children }) => {
       </div>
 
       <div
-        className="bg-slate-500 flex justify-center items-center p-5 border-2"
+        className="bg-slate-500 flex md:justify-center p-5 border-2 overflow-scroll"
         style={{ minHeight: "80vh", zoom: "0.7" }}
       >
         <div ref={printRef}>
