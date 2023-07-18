@@ -26,8 +26,6 @@ const ComponentToPrint = () => {
     fetchData();
   }, []);
 
-  console.log("data", data);
-
   return (
     <div>
       {data.map((page, i) => (
