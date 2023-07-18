@@ -2,10 +2,9 @@ import React from "react";
 
 const A3Container = ({ children, pageNumber }) => {
   const containerStyle = {
+    height: "329mm", // A3 height
     width: "483mm", // A3 width
-    height: "329mm", // A3 width
     background: "#ffffff", // white background
-    boxShadow: "0 0 10px rgba(0, 0, 0, 0.2)", // box shadow
   };
 
   return (

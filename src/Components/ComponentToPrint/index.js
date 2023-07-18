@@ -4,7 +4,7 @@ import LabelCard from "../LabelCard";
 import { chunkArray } from "../../utils";
 
 const ComponentToPrint = () => {
-  const bigArray = Array.from({ length: 300 }, (_, i) => `String ${i + 1}`);
+  const bigArray = Array.from({ length: 100 }, (_, i) => `String ${i + 1}`);
 
   const chunkedArray = chunkArray(bigArray, 63);
 

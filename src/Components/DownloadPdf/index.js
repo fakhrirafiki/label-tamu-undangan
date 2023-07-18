@@ -1,7 +1,11 @@
 import React, { useRef, useState } from "react";
 import html2canvas from "html2canvas";
 import { jsPDF } from "jspdf";
-import { Button, notification, Spin, Divider } from "antd";
+import { Button, notification, Spin } from "antd";
+
+const PAGE_HEIGHT = 329;
+const PAGE_WIDTH = 483;
+const PAGE_MARGIN = 0; // Margin between pages in mm
 
 const DownloadPdf = ({ children }) => {
   const [loading, setLoading] = useState(false);
@@ -12,27 +16,44 @@ const DownloadPdf = ({ children }) => {
       const element = printRef.current;
       setLoading(true);
       const canvas = await html2canvas(element);
-      const data = canvas.toDataURL("image/png");
+      const veryLongImage = canvas.toDataURL("image/png");
 
       const pdf = new jsPDF({
         orientation: "landscape",
         unit: "mm",
-        format: [329, 483],
+        format: [PAGE_WIDTH, PAGE_HEIGHT],
       });
 
-      console.log("pdf", pdf);
+      const imgWidth = PAGE_WIDTH - 2 * PAGE_MARGIN;
+      const imgHeight = (imgWidth * canvas.height) / canvas.width;
+      const totalPages = Math.ceil(imgHeight / PAGE_HEIGHT);
 
-      const imgProperties = pdf.getImageProperties(data);
-      console.log("imgProperties", imgProperties);
+      for (let i = 0; i < totalPages; i++) {
+        const pageImgBlob = await fetch(veryLongImage).then((response) =>
+          response.blob()
+        );
+        const pageImgUrl = URL.createObjectURL(pageImgBlob);
 
-      const pdfWidth = pdf.internal.pageSize.getWidth();
-      const pdfHeight = (imgProperties.height * pdfWidth) / imgProperties.width;
+        const currentPosition = i * PAGE_HEIGHT;
+        pdf.addImage(
+          pageImgUrl,
+          "PNG",
+          PAGE_MARGIN,
+          PAGE_MARGIN - currentPosition,
+          imgWidth,
+          imgHeight,
+          undefined,
+          "FAST"
+        );
 
-      console.log("pdfWidth", pdfWidth);
-      console.log("pdfHeight", pdfHeight);
+        if (i < totalPages - 1) {
+          pdf.addPage();
+        }
 
-      // pdf.addImage(data, "PNG", 0, 0, pdfWidth, pdfHeight);
-      // pdf.save("print.pdf");
+        URL.revokeObjectURL(pageImgUrl);
+      }
+
+      pdf.save("print.pdf");
       setLoading(false);
     } catch (error) {
       setLoading(false);
