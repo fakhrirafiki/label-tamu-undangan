@@ -79,12 +79,12 @@ const DownloadPdf = ({ children }) => {
       </div>
 
       <div
-        className="bg-slate-500 flex md:justify-center p-5 border-2 overflow-scroll"
+        className="bg-slate-500 flex justify-center md:justify-start p-5 border-2 overflow-scroll"
         style={{ minHeight: "80vh", zoom: "0.7" }}
       >
         <div ref={printRef}>
           {loading ? (
-            <div className="bg-white px-20 py-10 text-center ml:auto mr:auto">
+            <div className="bg-white px-20 py-10 text-center md:w-52 w-full">
               <Spin size="large" tip="Loading..." />
               <p className="mt-5 italic">Sabar gan...</p>
             </div>
