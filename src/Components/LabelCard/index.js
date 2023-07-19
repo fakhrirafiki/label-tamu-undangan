@@ -8,7 +8,6 @@ function LabelCard({ tamu }) {
     border: "1px solid #eee",
   };
 
-  console.log("tamu", tamu);
   return (
     <div
       style={labelStyle}

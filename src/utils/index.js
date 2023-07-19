@@ -24,11 +24,14 @@ export async function fetchSpreadsheetData(
 
     const [header, ...rows] = data.values;
 
-    console.log("rows", rows);
-
     const jsonData = rows
       .filter((arr) => {
         return arr[0];
+      })
+      .sort(function (a, b) {
+        var textA = a[0].toUpperCase();
+        var textB = b[0].toUpperCase();
+        return textA < textB ? -1 : textA > textB ? 1 : 0;
       })
       .map((row) => {
         const item = {};
