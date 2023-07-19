@@ -84,7 +84,7 @@ const DownloadPdf = ({ children }) => {
       >
         <div ref={printRef}>
           {loading ? (
-            <div className="bg-white px-20 py-10 text-center">
+            <div className="bg-white px-20 py-10 text-center ml:auto mr:auto">
               <Spin size="large" tip="Loading..." />
               <p className="mt-5 italic">Sabar gan...</p>
             </div>

@@ -1,4 +1,5 @@
 import React from "react";
+import "./A3Container.css";
 
 const A3Container = ({ children, pageNumber }) => {
   const containerStyle = {
@@ -8,7 +9,7 @@ const A3Container = ({ children, pageNumber }) => {
   };
 
   return (
-    <div style={containerStyle} className="relative">
+    <div style={containerStyle} className="relative page">
       {pageNumber && (
         <div className="absolute right-1/2 translate-x-1/2 top-5">
           Page {pageNumber}
