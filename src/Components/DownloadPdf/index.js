@@ -2,6 +2,7 @@ import React, { useRef, useState } from "react";
 import html2canvas from "html2canvas";
 import { jsPDF } from "jspdf";
 import { Button, notification, Spin } from "antd";
+import "./style.css";
 
 const PAGE_HEIGHT = 329;
 const PAGE_WIDTH = 483;
@@ -82,15 +83,17 @@ const DownloadPdf = ({ children }) => {
         className="bg-slate-500 flex md:justify-center justify-start p-5 border-2 overflow-scroll"
         style={{ minHeight: "80vh", zoom: "0.7" }}
       >
-        <div ref={printRef}>
-          {loading ? (
-            <div className="bg-white px-20 py-10 text-center md:w-52 w-full">
-              <Spin size="large" tip="Loading..." />
-              <p className="mt-5 italic">Sabar gan...</p>
-            </div>
-          ) : (
-            children
-          )}
+        <div className="shadow-paper h-auto flex md:justify-center justify-start justify-self-center">
+          <div ref={printRef}>
+            {loading ? (
+              <div className="bg-white px-20 py-10 text-center md:w-52 w-full">
+                <Spin size="large" tip="Loading..." />
+                <p className="mt-5 italic">Sabar gan, agak lama ni...</p>
+              </div>
+            ) : (
+              children
+            )}
+          </div>
         </div>
       </div>
     </div>
