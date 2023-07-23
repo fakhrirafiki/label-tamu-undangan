@@ -6,9 +6,28 @@ export function chunkArray(array, chunkSize) {
   return chunks;
 }
 
+function extractRawName(decoratedName) {
+  const nameParts = decoratedName.split(",");
+
+  if (nameParts.length > 0) {
+    const name = nameParts[0].trim();
+    return name
+      .replace(
+        /^(?:Dr|Drs|Dra|S(?:\.|OS)|M(?:\.|Si)|MA|M(?:\.|A)|Bc(?:\.|)|Ir(?:\.|)|Ing(?:\.|)|D3|S(?:\.|Kom)|S(?:\.|Pd)|S(?:\.|Psi)|H(?:\.|j)|K(?:\.|H))(?:\.\s*)?/i,
+        ""
+      )
+      .trim();
+  } else {
+    // Return the original input if no comma found
+    return decoratedName;
+  }
+}
+
 const isDuplicate = (obj1, obj2) => {
-  // Check if the names are similar
-  const nameSimilarity = obj1.Nama.toLowerCase() === obj2.Nama.toLowerCase();
+  // Check if the names are similar after extracting raw names
+  const rawName1 = extractRawName(obj1.Nama);
+  const rawName2 = extractRawName(obj2.Nama);
+  const nameSimilarity = rawName1.toLowerCase() === rawName2.toLowerCase();
 
   // Add other conditions here to check similarity for other properties if needed
   // For example:
