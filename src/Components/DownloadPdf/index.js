@@ -1,7 +1,7 @@
 import React, { useRef, useState } from "react";
 import html2canvas from "html2canvas";
 import { jsPDF } from "jspdf";
-import { Button, notification, Spin, Switch } from "antd";
+import { Button, notification, Spin, Switch, Row, Col } from "antd";
 import useHighlight from "./useHighlight";
 import "./style.css";
 
@@ -71,24 +71,30 @@ const DownloadPdf = ({ children }) => {
         className="w-full flex justify-center items-center sticky bg-blue-200 top-0 z-10 border-blue-700"
         style={{ borderBottom: "5px solid" }}
       >
-        <Button
-          className="bg-blue-800 m-5"
-          type="primary"
-          onClick={handleDownloadPdf}
-          loading={loading}
-        >
-          Download Sticker File
-        </Button>
-        <Switch
-          className="bg-slate-400 m-5"
-          type="primary"
-          onChange={toggleHighlight}
-          loading={loading}
-          checked={highligh}
-        />
-        <p className="-ml-3">
-          {highligh ? "Sembunyikan" : "Tampilkan"} Duplicate
-        </p>
+        <Row gutter={0} justify="center" align="middle">
+          <Col span={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
+            <Button
+              className="bg-blue-800 m-5"
+              type="primary"
+              onClick={handleDownloadPdf}
+              loading={loading}
+            >
+              Download Sticker File
+            </Button>
+          </Col>
+          <Col span={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
+            <Switch
+              className="bg-slate-400 m-3"
+              type="primary"
+              onChange={toggleHighlight}
+              loading={loading}
+              checked={highligh}
+            />
+            <span className="-ml-1">
+              {highligh ? "Sembunyikan" : "Tampilkan"} Duplicate
+            </span>
+          </Col>
+        </Row>
       </div>
 
       <div
@@ -98,7 +104,7 @@ const DownloadPdf = ({ children }) => {
         <div className="shadow-paper h-auto flex md:justify-center justify-start justify-self-center">
           <div ref={printRef}>
             {loading ? (
-              <div className="bg-white px-20 py-10 text-center md:w-52 w-full">
+              <div className="bg-white px-20 py-10 text-center">
                 <Spin size="large" tip="Loading..." />
                 <p className="mt-5 italic">Sabar gan, agak lama ni...</p>
               </div>
