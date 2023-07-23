@@ -39,7 +39,7 @@ const isDuplicate = (obj1, obj2) => {
 
 export async function fetchSpreadsheetData(
   spreadsheetId = "1faP8lQG8P_mIEQGFbh1_c4T8pph4dE-2zs1fI6tkuoM",
-  sheetName = "Compile Undangan!A:D"
+  sheetName = "Final Sheet!A:D"
 ) {
   const apiKey = "AIzaSyCIhTDdUsIKzMCEzRKB6qvThhMRiNiyRM8";
   const url = `https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}/values/${sheetName}?key=${apiKey}`;
