@@ -1,7 +1,8 @@
 import React, { useRef, useState } from "react";
 import html2canvas from "html2canvas";
 import { jsPDF } from "jspdf";
-import { Button, notification, Spin } from "antd";
+import { Button, notification, Spin, Switch } from "antd";
+import useHighlight from "./useHighlight";
 import "./style.css";
 
 const PAGE_HEIGHT = 329;
@@ -10,6 +11,7 @@ const PAGE_MARGIN = 0; // Margin between pages in mm
 
 const DownloadPdf = ({ children }) => {
   const [loading, setLoading] = useState(false);
+  const { highligh, toggleHighlight } = useHighlight();
   const printRef = useRef();
 
   const handleDownloadPdf = async () => {
@@ -66,7 +68,7 @@ const DownloadPdf = ({ children }) => {
   return (
     <div>
       <div
-        className="w-full flex justify-center sticky bg-blue-200 top-0 z-10 border-blue-700"
+        className="w-full flex justify-center items-center sticky bg-blue-200 top-0 z-10 border-blue-700"
         style={{ borderBottom: "5px solid" }}
       >
         <Button
@@ -77,6 +79,16 @@ const DownloadPdf = ({ children }) => {
         >
           Download Sticker File
         </Button>
+        <Switch
+          className="bg-slate-400 m-5"
+          type="primary"
+          onChange={toggleHighlight}
+          loading={loading}
+          checked={highligh}
+        />
+        <p className="-ml-3">
+          {highligh ? "Sembunyikan" : "Tampilkan"} Duplicate
+        </p>
       </div>
 
       <div
@@ -91,7 +103,7 @@ const DownloadPdf = ({ children }) => {
                 <p className="mt-5 italic">Sabar gan, agak lama ni...</p>
               </div>
             ) : (
-              children
+              React.cloneElement(children, { highligh: highligh })
             )}
           </div>
         </div>

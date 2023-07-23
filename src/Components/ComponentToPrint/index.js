@@ -4,7 +4,7 @@ import A3Container from "../A3Container";
 import LabelCard from "../LabelCard";
 import { chunkArray, fetchSpreadsheetData } from "../../utils";
 
-const ComponentToPrint = () => {
+const ComponentToPrint = ({ highligh }) => {
   const [data, setData] = useState([]);
 
   useEffect(() => {
@@ -34,7 +34,7 @@ const ComponentToPrint = () => {
             }}
           >
             {page.map((tamu, i) => (
-              <LabelCard key={i} tamu={tamu} />
+              <LabelCard key={i} tamu={tamu} highligh={highligh} />
             ))}
           </div>
         </A3Container>

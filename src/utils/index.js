@@ -6,6 +6,18 @@ export function chunkArray(array, chunkSize) {
   return chunks;
 }
 
+const isDuplicate = (obj1, obj2) => {
+  // Check if the names are similar
+  const nameSimilarity = obj1.Nama.toLowerCase() === obj2.Nama.toLowerCase();
+
+  // Add other conditions here to check similarity for other properties if needed
+  // For example:
+  // const jabatanSimilarity = obj1.Jabatan.toLowerCase() === obj2.Jabatan.toLowerCase();
+  // const alamatSimilarity = obj1.Alamat.toLowerCase() === obj2.Alamat.toLowerCase();
+
+  return nameSimilarity; // && jabatanSimilarity && alamatSimilarity;
+};
+
 export async function fetchSpreadsheetData(
   spreadsheetId = "1faP8lQG8P_mIEQGFbh1_c4T8pph4dE-2zs1fI6tkuoM",
   sheetName = "Compile Undangan!A:D"
@@ -39,7 +51,13 @@ export async function fetchSpreadsheetData(
           item[header[index]] = value;
         });
         return item;
-      });
+      })
+      .map((obj1, index1, myData) => ({
+        ...obj1,
+        isPotentiallyDuplicateFlag: myData.some(
+          (obj2, index2) => index1 !== index2 && isDuplicate(obj1, obj2)
+        ),
+      }));
 
     console.log("jsonData", jsonData);
 
