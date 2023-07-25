@@ -12,6 +12,8 @@ const PAGE_MARGIN = 0; // Margin between pages in mm
 const DownloadPdf = ({ children }) => {
   const [loading, setLoading] = useState(false);
   const { highligh, toggleHighlight } = useHighlight();
+  const { highligh: typeMark, toggleHighlight: toggleTypeMark } =
+    useHighlight();
   const printRef = useRef();
 
   const handleDownloadPdf = async () => {
@@ -94,6 +96,18 @@ const DownloadPdf = ({ children }) => {
               {highligh ? "Sembunyikan" : "Tampilkan"} Duplicate
             </span>
           </Col>
+          <Col span={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
+            <Switch
+              className="bg-slate-400 m-3"
+              type="primary"
+              onChange={toggleTypeMark}
+              loading={loading}
+              checked={typeMark}
+            />
+            <span className="-ml-1">
+              {highligh ? "Sembunyikan" : "Tampilkan"} Bagian
+            </span>
+          </Col>
         </Row>
       </div>
 
@@ -109,7 +123,7 @@ const DownloadPdf = ({ children }) => {
                 <p className="mt-5 italic">Sabar gan, agak lama ni...</p>
               </div>
             ) : (
-              React.cloneElement(children, { highligh: highligh })
+              React.cloneElement(children, { highligh, typeMark })
             )}
           </div>
         </div>

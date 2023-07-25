@@ -1,6 +1,6 @@
 import React from "react";
 
-function LabelCard({ tamu, highligh }) {
+function LabelCard({ tamu, highligh, typeMark }) {
   const labelStyle = {
     width: "63mm", // A3 width
     height: "33mm", // A3 width
@@ -25,12 +25,14 @@ function LabelCard({ tamu, highligh }) {
         className="absolute bottom-0 right-0 left-0 p-0 m-0"
         style={{ borderBottom: `6px solid ${tamu.Color}`, fontSize: 6 }}
       >
-        <span
-          className="block"
-          style={{ marginBottom: -13, color: tamu.TextColor }}
-        >
-          {tamu.Bagian}
-        </span>
+        {typeMark && (
+          <span
+            className="block"
+            style={{ marginBottom: -13, color: tamu.TextColor }}
+          >
+            {tamu.Bagian}
+          </span>
+        )}
       </div>
     </div>
   );
