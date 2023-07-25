@@ -22,10 +22,13 @@ function LabelCard({ tamu, highligh }) {
       </div>
 
       <div
-        className="absolute bottom-0 right-0 left-0 p-0 m-0 text-white"
+        className="absolute bottom-0 right-0 left-0 p-0 m-0"
         style={{ borderBottom: `6px solid ${tamu.Color}`, fontSize: 6 }}
       >
-        <span className="block" style={{ marginBottom: -13 }}>
+        <span
+          className="block"
+          style={{ marginBottom: -13, color: tamu.TextColor }}
+        >
           {tamu.Bagian}
         </span>
       </div>

@@ -37,6 +37,21 @@ const isDuplicate = (obj1, obj2) => {
   return nameSimilarity; // && jabatanSimilarity && alamatSimilarity;
 };
 
+function getInverseColor(hexColor) {
+  const r = parseInt(hexColor.substr(1, 2), 16);
+  const g = parseInt(hexColor.substr(3, 2), 16);
+  const b = parseInt(hexColor.substr(5, 2), 16);
+  const inverseR = 255 - r;
+  const inverseG = 255 - g;
+  const inverseB = 255 - b;
+  return (
+    "#" +
+    ("0" + inverseR.toString(16)).slice(-2) +
+    ("0" + inverseG.toString(16)).slice(-2) +
+    ("0" + inverseB.toString(16)).slice(-2)
+  );
+}
+
 function addRandomColorToData(data) {
   const colorMap = new Map();
 
@@ -58,6 +73,7 @@ function addRandomColorToData(data) {
     const randomColor = getRandomHexColor();
     items.forEach((item) => {
       item.Color = randomColor;
+      item.TextColor = getInverseColor(randomColor);
     });
   });
 
