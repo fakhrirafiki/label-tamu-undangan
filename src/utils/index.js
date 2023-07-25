@@ -37,9 +37,39 @@ const isDuplicate = (obj1, obj2) => {
   return nameSimilarity; // && jabatanSimilarity && alamatSimilarity;
 };
 
+function addRandomColorToData(data) {
+  const colorMap = new Map();
+
+  // Iterate through the data array and group objects by "Bagian"
+  data.forEach((item) => {
+    if (colorMap.has(item.Bagian)) {
+      colorMap.get(item.Bagian).push(item);
+    } else {
+      colorMap.set(item.Bagian, [item]);
+    }
+  });
+
+  // Generate random hex colors for each "Bagian" group
+  const getRandomHexColor = () =>
+    "#" + Math.floor(Math.random() * 16777215).toString(16);
+
+  // Assign random colors to each item in the same "Bagian" group
+  colorMap.forEach((items) => {
+    const randomColor = getRandomHexColor();
+    items.forEach((item) => {
+      item.Color = randomColor;
+    });
+  });
+
+  // Flatten the groups back into the data array
+  const resultData = Array.from(colorMap.values()).flat();
+
+  return resultData;
+}
+
 export async function fetchSpreadsheetData(
   spreadsheetId = "1faP8lQG8P_mIEQGFbh1_c4T8pph4dE-2zs1fI6tkuoM",
-  sheetName = "Final Sheet!A:D"
+  sheetName = "Final Sheet!A:E"
 ) {
   const apiKey = "AIzaSyCIhTDdUsIKzMCEzRKB6qvThhMRiNiyRM8";
   const url = `https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}/values/${sheetName}?key=${apiKey}`;
@@ -59,11 +89,6 @@ export async function fetchSpreadsheetData(
       .filter((arr) => {
         return arr[0];
       })
-      .sort(function (a, b) {
-        var textA = a[0].toUpperCase();
-        var textB = b[0].toUpperCase();
-        return textA < textB ? -1 : textA > textB ? 1 : 0;
-      })
       .map((row) => {
         const item = {};
         row.forEach((value, index) => {
@@ -76,11 +101,16 @@ export async function fetchSpreadsheetData(
         isPotentiallyDuplicateFlag: myData.some(
           (obj2, index2) => index1 !== index2 && isDuplicate(obj1, obj2)
         ),
-      }));
+      }))
+      .sort(function (a, b) {
+        var textA = a.Bagian.toUpperCase();
+        var textB = b.Bagian.toUpperCase();
+        return textA < textB ? -1 : textA > textB ? 1 : 0;
+      });
 
     console.log("jsonData", jsonData);
 
-    return jsonData;
+    return addRandomColorToData(jsonData);
   } catch (error) {
     console.log(error);
     throw error;

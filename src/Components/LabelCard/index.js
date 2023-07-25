@@ -11,7 +11,7 @@ function LabelCard({ tamu, highligh }) {
   return (
     <div
       style={labelStyle}
-      className="p-2 text-center flex justify-center items-center text-sm transition-all duration-300"
+      className="relative p-2 text-center flex flex-col justify-center items-center text-sm transition-all duration-300"
     >
       <div>
         <p>{tamu.Nama.toUpperCase()}</p>
@@ -19,6 +19,15 @@ function LabelCard({ tamu, highligh }) {
         <p>
           {`     di `} {!!tamu?.Alamat ? tamu?.Alamat : "tempat"}
         </p>
+      </div>
+
+      <div
+        className="absolute bottom-0 right-0 left-0 p-0 m-0 text-white"
+        style={{ borderBottom: `6px solid ${tamu.Color}`, fontSize: 6 }}
+      >
+        <span className="block" style={{ marginBottom: -13 }}>
+          {tamu.Bagian}
+        </span>
       </div>
     </div>
   );
