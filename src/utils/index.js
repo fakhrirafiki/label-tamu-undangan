@@ -65,8 +65,16 @@ function addRandomColorToData(data) {
   });
 
   // Generate random hex colors for each "Bagian" group
-  const getRandomHexColor = () =>
-    "#" + Math.floor(Math.random() * 16777215).toString(16);
+  function getRandomHexColor() {
+    const letters = "0123456789ABCDEF";
+    let color = "#";
+    do {
+      for (let i = 0; i < 6; i++) {
+        color += letters[Math.floor(Math.random() * 16)];
+      }
+    } while (color === "#ffffff"); // Avoid white color
+    return color;
+  }
 
   // Assign random colors to each item in the same "Bagian" group
   colorMap.forEach((items) => {
